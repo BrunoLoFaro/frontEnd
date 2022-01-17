@@ -1,16 +1,14 @@
 import React, { useMemo, useState, useEffect } from "react";
 
 import Table from "./table";
-
 import axios from 'axios';
 
 const Home = () => {
 
-
   const columns = useMemo(
     () => [
       {
-        // first group - TV Show
+        // first group
         Header: "Books",
         // First group columns
         columns: [
@@ -20,12 +18,12 @@ const Home = () => {
           },
           {
             Header: "Price",
-            accessor: "price"
+            accessor: "precio"
           }
         ]
       },
       {
-        // Second group - Details
+        // Second group
         Header: "Details",
         // Second group columns
         columns: [
@@ -33,6 +31,16 @@ const Home = () => {
             Header: "Description",
             accessor: "descripcion"
           },
+          {
+            Header: "Photo",
+            accessor: "foto",
+            Cell: tableProps => (
+              <img
+                src={tableProps.row.foto}
+                width={60}
+              />
+            )
+          }
         ]
       }
     ],
@@ -51,6 +59,7 @@ const Home = () => {
           return (
             <div className="Home">
               <Table columns={columns} data={data} />
+
             </div>
           );
 }
