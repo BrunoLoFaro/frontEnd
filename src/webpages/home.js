@@ -58,8 +58,9 @@ const Home = () => {
 
           return (
             <div className="Home">
+        <div>
+        </div>
               <Table columns={columns} data={data} />
-
             </div>
           );
 }

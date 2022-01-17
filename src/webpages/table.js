@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useTable, useFilters } from "react-table";
-
+import { useTable, useFilters, useSortBy } from "react-table";
 
 export default function Table({ columns, data }) {
   // Use the useTable Hook to send the columns and data to build the table
@@ -10,14 +9,14 @@ export default function Table({ columns, data }) {
     headerGroups,
     rows,
     prepareRow,
-    setFilter // The useFilter Hook provides a way to set the filter
+    setFilter
   } = useTable(
     {
       columns,
       data
     },
-    useFilters // Adding the useFilters Hook to the table
-    // You can add as many Hooks as you want. Check the documentation for details. You can even add custom Hooks for react-table here
+    useFilters,
+    useSortBy // This plugin Hook will help to sort our table columns
   );
 
 
@@ -41,7 +40,18 @@ export default function Table({ columns, data }) {
         {headerGroups.map(headerGroup => (
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              <th
+              {...column.getHeaderProps(column.getSortByToggleProps())}
+              className={
+                column.isSorted
+                  ? column.isSortedDesc
+                    ? "sort-desc"
+                    : "sort-asc"
+                  : ""
+              }
+            >
+              {column.render("Header")}
+            </th>
             ))}
           </tr>
         ))}
